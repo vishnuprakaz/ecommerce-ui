@@ -1,4 +1,5 @@
-export const DASHBOARD_PATH = '/dashboard/default';
+export const DASHBOARD_PATH = '/apps/e-commerce/products'; // Changed for E-commerce AI Agent POC
+// export const DASHBOARD_PATH = '/dashboard/default'; // Original dashboard path
 export const HORIZONTAL_MAX_ITEM = 7;
 
 export const MenuOrientation = {

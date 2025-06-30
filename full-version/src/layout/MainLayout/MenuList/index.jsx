@@ -26,7 +26,7 @@ const MenuList = () => {
     const { menuOrientation } = useConfig();
     const { menuLoading } = useGetMenu();
     const { menuMaster } = useGetMenuMaster();
-    const drawerOpen = menuMaster.isDashboardDrawerOpened;
+    const drawerOpen = menuMaster?.isDashboardDrawerOpened || false;
     const isHorizontal = menuOrientation === MenuOrientation.HORIZONTAL && !downMD;
 
     const [selectedID, setSelectedID] = useState('');
@@ -95,6 +95,13 @@ const MenuList = () => {
                         remItems={remItems}
                         lastItemId={lastItemId}
                     />
+                );
+            case 'item':
+                return (
+                    <List key={item.id}>
+                        <NavItem item={item} level={1} setSelectedID={setSelectedID} />
+                        {!isHorizontal && index !== menuItems.items.length - 1 && <Divider sx={{ py: 0.5 }} />}
+                    </List>
                 );
             default:
                 return (

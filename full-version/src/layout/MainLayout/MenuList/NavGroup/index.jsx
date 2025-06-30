@@ -40,7 +40,7 @@ const NavGroup = ({ item, lastItem, remItems, lastItemId, selectedID, setSelecte
 
     const { menuOrientation, borderRadius } = useConfig();
     const { menuMaster } = useGetMenuMaster();
-    const drawerOpen = menuMaster.isDashboardDrawerOpened;
+    const drawerOpen = menuMaster?.isDashboardDrawerOpened || false;
     const isHorizontal = menuOrientation === MenuOrientation.HORIZONTAL && !downMD;
 
     const [anchorEl, setAnchorEl] = useState(null);

@@ -18,7 +18,7 @@ import { linearProgressClasses } from '@mui/material/LinearProgress';
 import { ThemeMode } from 'config';
 
 // assets
-import TableChartOutlinedIcon from '@mui/icons-material/TableChartOutlined';
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 
 // ==============================|| PROGRESS BAR WITH LABEL ||============================== //
 
@@ -31,17 +31,17 @@ function LinearProgressWithLabel({ value, ...others }) {
                 <Grid container justifyContent="space-between">
                     <Grid item>
                         <Typography variant="h6" sx={{ color: theme.palette.mode === ThemeMode.DARK ? 'dark.light' : 'primary.800' }}>
-                            Progress
+                            Limited Time
                         </Typography>
                     </Grid>
                     <Grid item>
-                        <Typography variant="h6" color="inherit">{`${Math.round(value)}%`}</Typography>
+                        <Typography variant="h6" color="inherit">{`${Math.round(value)}% OFF`}</Typography>
                     </Grid>
                 </Grid>
             </Grid>
             <Grid item>
                 <LinearProgress
-                    aria-label="progress of theme"
+                    aria-label="discount offer progress"
                     variant="determinate"
                     value={value}
                     {...others}
@@ -53,7 +53,7 @@ function LinearProgressWithLabel({ value, ...others }) {
                         },
                         [`& .${linearProgressClasses.bar}`]: {
                             borderRadius: 5,
-                            bgcolor: 'primary.dark'
+                            bgcolor: 'warning.main'
                         }
                     }}
                 />
@@ -74,7 +74,7 @@ const MenuCard = () => {
     return (
         <Card
             sx={{
-                bgcolor: theme.palette.mode === ThemeMode.DARK ? 'dark.main' : 'primary.light',
+                bgcolor: theme.palette.mode === ThemeMode.DARK ? 'dark.main' : 'warning.light',
                 mb: 2.75,
                 overflow: 'hidden',
                 position: 'relative',
@@ -83,7 +83,7 @@ const MenuCard = () => {
                     position: 'absolute',
                     width: 157,
                     height: 157,
-                    bgcolor: theme.palette.mode === ThemeMode.DARK ? 'dark.dark' : 'primary.200',
+                    bgcolor: theme.palette.mode === ThemeMode.DARK ? 'dark.dark' : 'warning.200',
                     borderRadius: '50%',
                     top: -105,
                     right: -96
@@ -99,13 +99,13 @@ const MenuCard = () => {
                                 sx={{
                                     ...theme.typography.commonAvatar,
                                     ...theme.typography.largeAvatar,
-                                    color: 'primary.main',
+                                    color: 'warning.main',
                                     border: theme.palette.mode === ThemeMode.DARK ? '1px solid' : 'none',
-                                    borderColor: 'primary.main',
+                                    borderColor: 'warning.main',
                                     bgcolor: 'background.paper'
                                 }}
                             >
-                                <TableChartOutlinedIcon fontSize="inherit" />
+                                <LocalOfferIcon fontSize="inherit" />
                             </Avatar>
                         </ListItemAvatar>
                         <ListItemText
@@ -113,16 +113,16 @@ const MenuCard = () => {
                             primary={
                                 <Typography
                                     variant="subtitle1"
-                                    sx={{ color: theme.palette.mode === ThemeMode.DARK ? 'dark.light' : 'primary.800' }}
+                                    sx={{ color: theme.palette.mode === ThemeMode.DARK ? 'dark.light' : 'warning.800' }}
                                 >
-                                    Get Extra Space
+                                    Special Offers
                                 </Typography>
                             }
-                            secondary={<Typography variant="caption"> 28/23 GB</Typography>}
+                            secondary={<Typography variant="caption">Free shipping on orders $50+</Typography>}
                         />
                     </ListItem>
                 </List>
-                <LinearProgressWithLabel value={80} />
+                <LinearProgressWithLabel value={25} />
             </Box>
         </Card>
     );

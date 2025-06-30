@@ -33,7 +33,7 @@ const NavItem = ({ item, level, isParents = false, setSelectedID }) => {
     const { mode, menuOrientation, borderRadius } = useConfig();
 
     const { menuMaster } = useGetMenuMaster();
-    const drawerOpen = menuMaster.isDashboardDrawerOpened;
+    const drawerOpen = menuMaster?.isDashboardDrawerOpened || false;
     const isHorizontal = menuOrientation === MenuOrientation.HORIZONTAL && !downMD;
     const isSelected = !!matchPath({ path: item?.link ? item.link : item.url, end: false }, pathname);
 

@@ -28,7 +28,7 @@ const Sidebar = () => {
     const downMD = useMediaQuery((theme) => theme.breakpoints.down('md'));
 
     const { menuMaster } = useGetMenuMaster();
-    const drawerOpen = menuMaster.isDashboardDrawerOpened;
+    const drawerOpen = menuMaster?.isDashboardDrawerOpened || false;
 
     const { menuOrientation, miniDrawer } = useConfig();
 

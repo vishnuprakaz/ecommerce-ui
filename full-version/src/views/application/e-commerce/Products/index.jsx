@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 
+// project imports for AI integration
+import { useAIProductFilter } from 'contexts/AIProductFilterContext';
+
 // material-ui
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -26,7 +29,6 @@ import ProductFilter from './ProductFilter';
 import ProductFilterView from './ProductFilterView';
 
 import ProductCard from 'ui-component/cards/ProductCard';
-import FloatingCart from 'ui-component/cards/FloatingCart';
 import SkeletonProductPlaceholder from 'ui-component/cards/Skeleton/ProductPlaceholder';
 
 import useConfig from 'hooks/useConfig';
@@ -46,6 +48,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 const ProductsList = () => {
     const { borderRadius } = useConfig();
     const cart = useSelector((state) => state.cart);
+    const { globalFilter, setGlobalFilter } = useAIProductFilter();
 
     const matchDownMD = useMediaQuery((theme) => theme.breakpoints.down('lg'));
     const matchDownLG = useMediaQuery((theme) => theme.breakpoints.down('xl'));
@@ -74,7 +77,7 @@ const ProductsList = () => {
         }
     }, [cart.checkout.step]);
 
-    // filter
+    // filter - sync with AI global filter
     const initialState = {
         search: '',
         sort: 'low',
@@ -84,12 +87,19 @@ const ProductsList = () => {
         price: '',
         rating: 0
     };
-    const [filter, setFilter] = useState(initialState);
+    const [filter, setFilter] = useState(globalFilter);
+
+    // Sync with AI global filter when it changes
+    useEffect(() => {
+        setFilter(globalFilter);
+    }, [globalFilter]);
 
     // search filter
     const handleSearch = async (event) => {
         const newString = event?.target.value;
-        setFilter({ ...filter, search: newString });
+        const newFilter = { ...filter, search: newString };
+        setFilter(newFilter);
+        setGlobalFilter(newFilter);
     };
 
     // sort options
@@ -116,49 +126,54 @@ const ProductsList = () => {
 
     const handelFilter = (type, params, rating) => {
         setProductLoading(true);
+        let newFilter = { ...filter };
+        
         switch (type) {
             case 'gender':
                 if (filter.gender.some((item) => item === params)) {
-                    setFilter({ ...filter, gender: filter.gender.filter((item) => item !== params) });
+                    newFilter = { ...filter, gender: filter.gender.filter((item) => item !== params) };
                 } else {
-                    setFilter({ ...filter, gender: [...filter.gender, params] });
+                    newFilter = { ...filter, gender: [...filter.gender, params] };
                 }
                 break;
             case 'categories':
                 if (filter.categories.some((item) => item === params)) {
-                    setFilter({ ...filter, categories: filter.categories.filter((item) => item !== params) });
+                    newFilter = { ...filter, categories: filter.categories.filter((item) => item !== params) };
                 } else if (filter.categories.some((item) => item === 'all') || params === 'all') {
-                    setFilter({ ...filter, categories: [params] });
+                    newFilter = { ...filter, categories: [params] };
                 } else {
-                    setFilter({ ...filter, categories: [...filter.categories, params] });
+                    newFilter = { ...filter, categories: [...filter.categories, params] };
                 }
-
                 break;
             case 'colors':
                 if (filter.colors.some((item) => item === params)) {
-                    setFilter({ ...filter, colors: filter.colors.filter((item) => item !== params) });
+                    newFilter = { ...filter, colors: filter.colors.filter((item) => item !== params) };
                 } else {
-                    setFilter({ ...filter, colors: [...filter.colors, params] });
+                    newFilter = { ...filter, colors: [...filter.colors, params] };
                 }
                 break;
             case 'price':
-                setFilter({ ...filter, price: params });
+                newFilter = { ...filter, price: params };
                 break;
             case 'search':
-                setFilter({ ...filter, search: params });
+                newFilter = { ...filter, search: params };
                 break;
             case 'sort':
-                setFilter({ ...filter, sort: params });
+                newFilter = { ...filter, sort: params };
                 break;
             case 'rating':
-                setFilter({ ...filter, rating: rating });
+                newFilter = { ...filter, rating: rating };
                 break;
             case 'reset':
-                setFilter(initialState);
+                newFilter = initialState;
                 break;
             default:
             // no options
         }
+        
+        // Update both local and global filter
+        setFilter(newFilter);
+        setGlobalFilter(newFilter);
     };
 
     const filterData = async (filter) => {
@@ -178,7 +193,9 @@ const ProductsList = () => {
 
     // sort filter
     const handleMenuItemClick = (event, index) => {
-        setFilter({ ...filter, sort: index });
+        const newFilter = { ...filter, sort: index };
+        setFilter(newFilter);
+        setGlobalFilter(newFilter);
         setAnchorEl(null);
     };
 
@@ -347,7 +364,8 @@ const ProductsList = () => {
                     </Drawer>
                 </Box>
             </Grid>
-            <FloatingCart />
+            {/* Disabled FloatingCart - using header cart icon instead */}
+            {/* <FloatingCart /> */}
         </Grid>
     );
 };

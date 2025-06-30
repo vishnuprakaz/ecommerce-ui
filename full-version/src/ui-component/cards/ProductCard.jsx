@@ -15,6 +15,7 @@ import Typography from '@mui/material/Typography';
 import MainCard from './MainCard';
 import SkeletonProductPlaceholder from 'ui-component/cards/Skeleton/ProductPlaceholder';
 import { getImageUrl, ImagePath } from 'utils/getImageUrl';
+import AIHighlightWrapper from 'ui-component/AIHighlight';
 
 import { useDispatch, useSelector } from 'store';
 import { addProduct } from 'store/slices/cart';
@@ -56,16 +57,19 @@ const ProductCard = ({ id, color, name, image, description, offerPrice, salePric
             {isLoading ? (
                 <SkeletonProductPlaceholder />
             ) : (
-                <MainCard
-                    content={false}
-                    boxShadow
-                    sx={{
-                        '&:hover': {
-                            transform: 'scale3d(1.02, 1.02, 1)',
-                            transition: 'all .4s ease-in-out'
-                        }
-                    }}
+                <AIHighlightWrapper
+                    elementId={`product-${id}`}
                 >
+                    <MainCard
+                        content={false}
+                        boxShadow
+                        sx={{
+                            '&:hover': {
+                                transform: 'scale3d(1.02, 1.02, 1)',
+                                transition: 'all .4s ease-in-out'
+                            }
+                        }}
+                    >
                     <CardMedia
                         sx={{ height: 220 }}
                         image={image && getImageUrl(`${image}`, ImagePath.ECOMMERCE)}
@@ -119,6 +123,7 @@ const ProductCard = ({ id, color, name, image, description, offerPrice, salePric
                         </Grid>
                     </CardContent>
                 </MainCard>
+                </AIHighlightWrapper>
             )}
         </>
     );

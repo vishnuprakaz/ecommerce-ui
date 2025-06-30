@@ -19,7 +19,6 @@ import RelatedProducts from './RelatedProducts';
 
 import MainCard from 'ui-component/cards/MainCard';
 import Chip from 'ui-component/extended/Chip';
-import FloatingCart from 'ui-component/cards/FloatingCart';
 
 import { dispatch, useSelector } from 'store';
 import { gridSpacing } from 'store/constant';
@@ -140,7 +139,6 @@ const ProductDetails = () => {
                     <Grid item xs={11} lg={10}>
                         {relatedProducts}
                     </Grid>
-                    <FloatingCart />
                 </Grid>
             )}
         </>

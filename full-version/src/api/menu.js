@@ -11,25 +11,26 @@ const initialState = {
 export const endpoints = {
     key: 'api/menu',
     master: 'master',
-    widget: '/widget' // server URL
+    // widget: '/widget' // Disabled for E-commerce AI Agent POC
 };
 
 export function useGetMenu() {
-    const { data, isLoading, error, isValidating } = useSWR(endpoints.key + endpoints.widget, fetcher, {
-        revalidateIfStale: false,
-        revalidateOnFocus: false,
-        revalidateOnReconnect: false
-    });
+    // Disabled for E-commerce AI Agent POC - return empty menu instead of API call
+    // const { data, isLoading, error, isValidating } = useSWR(endpoints.key + endpoints.widget, fetcher, {
+    //     revalidateIfStale: false,
+    //     revalidateOnFocus: false,
+    //     revalidateOnReconnect: false
+    // });
 
     const memoizedValue = useMemo(
         () => ({
-            menu: data?.widget,
-            menuLoading: isLoading,
-            menuError: error,
-            menuValidating: isValidating,
-            menuEmpty: !isLoading && !data?.length
+            menu: null, // No widget menu for POC
+            menuLoading: false,
+            menuError: null,
+            menuValidating: false,
+            menuEmpty: true
         }),
-        [data, error, isLoading, isValidating]
+        []
     );
 
     return memoizedValue;

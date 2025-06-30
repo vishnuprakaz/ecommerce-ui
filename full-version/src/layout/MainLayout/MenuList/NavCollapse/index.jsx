@@ -75,7 +75,7 @@ const NavCollapse = ({ menu, level, parentId }) => {
 
     const { mode, menuOrientation, borderRadius } = useConfig();
     const { menuMaster } = useGetMenuMaster();
-    const drawerOpen = menuMaster.isDashboardDrawerOpened;
+    const drawerOpen = menuMaster?.isDashboardDrawerOpened || false;
     const isHorizontal = menuOrientation === MenuOrientation.HORIZONTAL && !downMD;
 
     const [open, setOpen] = useState(false);
